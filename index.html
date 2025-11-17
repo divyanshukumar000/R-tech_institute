@@ -1147,11 +1147,24 @@
             navMenu.style.padding = "10px";
         }
     });
+const text = "“IT Skills Seekho Aur Apna Job-Ready Portfolio Banao.”";
+let index2 = 0;
+
+function typeEffect() {
+    if (index2 < text.length) {
+        document.getElementById("typingText").innerHTML += text.charAt(index2);
+        index2++;
+        setTimeout(typeEffect, 60); 
+    }
+}
+
+typeEffect();
 
 
     </script>
 </body>
 </html>
+
 
 
 
