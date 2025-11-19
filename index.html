@@ -10,17 +10,17 @@
 </head>
 <style>
 /* HEADER STYLING */
+/* HEADER */
 .header {
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(to right, #2b2a4c, #6527be);;
-    padding:10px;
+    background: linear-gradient(to right, #2b2a4c, #6527be);
+    padding: 10px;
     position: relative;
     z-index: 1000;
 }
-
 
 /* LOGO */
 .header img {
@@ -32,7 +32,7 @@
 .header .right {
     display: flex;
     align-items: center;
-    position: relative;
+    gap: 15px;
 }
 
 .header ul {
@@ -46,12 +46,10 @@
     font-size: 20px;
     padding: 10px 15px;
     color: #fff;
-    margin-right: 10px;
     cursor: pointer;
     transition: 0.3s;
 }
 
-/* HOVER EFFECT */
 .header .right ul li:hover {
     color: #d72c2c;
 }
@@ -62,11 +60,10 @@
     border-radius: 20px;
     border: none;
     padding: 8px 15px;
-    margin-left: 15px;
     outline: none;
 }
 
-/* DROPDOWN MENU */
+/* DROPDOWN */
 .dropdown-parent {
     position: relative;
 }
@@ -78,29 +75,24 @@
     display: none;
     border-radius: 5px;
     min-width: 200px;
+    background-color: #222;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
-    z-index: 999;
 }
 
-/* SHOW DROPDOWN ON HOVER */
-.dropdown-parent:hover .dropdown {
-    display: block;
-}
-
-/* DROPDOWN ITEMS */
-.dropdown ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+/* Desktop Hover Dropdown */
+@media (min-width: 993px) {
+    .dropdown-parent:hover .dropdown {
+        display: block;
+    }
 }
 
 .dropdown ul li {
     padding: 15px 15px;
     font-size: 16px;
     display: block;
+    width: 100%;
     color: white;
     cursor: pointer;
-    transition: 0.3s;
 }
 
 .dropdown ul li:hover {
@@ -114,15 +106,48 @@
     cursor: pointer;
 }
 
-/* RESPONSIVE DESIGN */
+/* ---------------------------------
+   MOBILE RESPONSIVE
+----------------------------------- */
 @media (max-width: 992px) {
-    .header .right {
-        display: none;
-    }
+
+    /* Show hamburger menu */
     .menu {
         display: block;
     }
+
+    /* Hide nav menu initially */
+    .header .right {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        padding: 15px;
+    }
+
+    /* UL full width on mobile */
+    .header .right ul li {
+        display: block;
+        width: 100%;
+        color: white;
+    }
+
+    /* Mobile dropdown (click-based) */
+    .dropdown {
+        position: static;
+        display: none;
+        background: #111;
+        /* padding-left: 15px; */
+    }
+
+    .dropdown.show {
+        display: block;
+    }
 }
+
 
  /* Section-1 */
 
@@ -262,6 +287,8 @@
     height:65vh;
     background-image: url(https://img.freepik.com/free-vector/modern-abstract-dark-violate-pink-background_84443-2788.jpg?semt=ais_hybrid&w=740&q=80);
     padding:20px;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .section-2 h1{
     text-align: center;
@@ -1131,23 +1158,27 @@
 
             
     const menuIcon = document.querySelector(".menu");
-    const navMenu = document.querySelector(".header .right");
+const navMenu = document.querySelector(".header .right");
+const dropdownParents = document.querySelectorAll(".dropdown-parent");
 
-    menuIcon.addEventListener("click", () => {
-        // toggle menu show/hide
-        if (navMenu.style.display === "flex") {
-            navMenu.style.display = "none";
-        } else {
-            navMenu.style.display = "flex";
-            navMenu.style.flexDirection = "column";
-            navMenu.style.background = "#b7d1cc";
-            navMenu.style.position = "absolute";
-            navMenu.style.top = "100%";
-            navMenu.style.left = "0";
-            navMenu.style.width = "100%";
-            navMenu.style.padding = "10px";
-        }
+// Toggle main mobile menu
+menuIcon.addEventListener("click", () => {
+    navMenu.style.display = 
+        navMenu.style.display === "flex" ? "none" : "flex";
+});
+
+// Toggle dropdowns on mobile
+dropdownParents.forEach(parent => {
+    parent.addEventListener("click", (e) => {
+        // desktop me click effect disable
+        if (window.innerWidth > 992) return;
+
+        e.stopPropagation();
+
+        const dropdown = parent.querySelector(".dropdown");
+        dropdown.classList.toggle("show");
     });
+});
 
 const text = "“IT Skills Seekho Aur Apna Job-Ready Portfolio Banao.”";
 let index2 = 0;
